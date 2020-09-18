@@ -105,11 +105,15 @@ router.put('/:id', function (req, res, next) {
   let id = req.params.id;
 
   try {
-    let sql = `DELETE FROM nilai WHERE id_nilai = ${id}`;
+    let idMhs = req.body.id_mhs;
+    let idMatkul = req.body.id_matkul;
+    let nilaiMahasiswa = req.body.nilai;
+    let keterangan = req.body.keterangan;
+    let sql = `UPDATE nilai SET id_mhs = ${idMhs}, id_matkul = ${idMatkul}, nilai_mhs = ${nilaiMahasiswa}, keterangan = '${keterangan}' WHERE id_nilai = ${id}`;
     pool.query(sql, (err, data) => {
       res.json({
         success: true,
-        message: "Data has been deleted"
+        message: "Data has been updated"
       });
     })
   } catch (err) {
