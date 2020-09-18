@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, Table, Button, Pagination } from 'react-bootstrap'
+import { Container, Row, Col, Table, Button } from 'react-bootstrap'
 import './home.css'
+import * as redux from 'redux'
+import { connect } from 'react-redux'
+import * as AppActions from '../../action'
 
-export default class Home extends Component {
+class Home extends Component {
+
+    componentDidMount() {
+        this.props.actions.loadData();
+    }
 
     handleAddClick(e) {
         document.location = '/add'
@@ -13,6 +20,28 @@ export default class Home extends Component {
     }
 
     render() {
+        const { data } = this.props
+        let filterData = data
+        console.log('Ini Data 2', filterData)
+        let dataNodes = filterData.map((data, index) => {
+            return (
+                <tr key={index}>
+                    <td style={{ verticalAlign: 'middle' }}>{(index + 1)}</td>
+                    <td style={{ verticalAlign: 'middle' }}>{data.id_mhs}</td>
+                    <td style={{ verticalAlign: 'middle' }}>{data.nama_mhs}</td>
+                    <td style={{ verticalAlign: 'middle' }}>{data.nama_matkul}</td>
+                    <td style={{ verticalAlign: 'middle' }}>{data.nilai_mhs}</td>
+                    <td>
+                        <Button
+                            style={{ marginRight: '15px' }}
+                            variant="success"
+                            onClick={this.handleEditClick.bind(this)}
+                            block>Edit</Button>
+                        <Button variant="danger" block>Delete</Button>
+                    </td>
+                </tr>
+            )
+        })
         return (
             <Container style={{ textAlign: 'center' }}>
                 <Row style={{ marginTop: '50px' }}>
@@ -39,21 +68,7 @@ export default class Home extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td style={{ verticalAlign: 'middle' }}>1</td>
-                                    <td style={{ verticalAlign: 'middle' }}>Mark</td>
-                                    <td style={{ verticalAlign: 'middle' }}>Otto</td>
-                                    <td style={{ verticalAlign: 'middle' }}>@mdo</td>
-                                    <td style={{ verticalAlign: 'middle' }}>8.00</td>
-                                    <td>
-                                        <Button
-                                            style={{ marginRight: '15px' }}
-                                            variant="success"
-                                            onClick={this.handleEditClick.bind(this)}
-                                            block>Edit</Button>
-                                        <Button variant="danger" block>Delete</Button>
-                                    </td>
-                                </tr>
+                                {dataNodes}
                             </tbody>
                         </Table>
                     </Col>
@@ -62,3 +77,20 @@ export default class Home extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        data: state.data
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: redux.bindActionCreators(AppActions, dispatch)
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home)
