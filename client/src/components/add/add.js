@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import './add.css'
+import * as redux from 'redux';
+import { connect } from 'react-redux';
+import * as AppActions from '../../action';
 
-export default class add extends Component {
+class Add extends Component {
 
     handleSubmit(e){
         e.preventDefault()
@@ -59,3 +62,14 @@ export default class add extends Component {
         )
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: redux.bindActionCreators(AppActions, dispatch)
+    }
+}
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(Add)
