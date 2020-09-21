@@ -22,7 +22,6 @@ class Home extends Component {
     render() {
         const { data } = this.props
         let filterData = data
-        console.log('Ini Data 2', filterData)
         let dataNodes = filterData.map((data, index) => {
             return (
                 <tr key={index}>
