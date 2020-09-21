@@ -83,7 +83,7 @@ module.exports = function (pool) {
       let idMhs = req.body.id_mhs;
       let idMatkul = req.body.id_matkul;
       let nilaiMahasiswa = req.body.nilai;
-      let keterangan = req.body.keterangan;
+      let keteranganMhs = req.body.keterangan;
       let sql = `INSERT INTO nilai (id_mhs, id_matkul, nilai_mhs, keterangan) VALUES (${idMhs}, ${idMatkul}, ${nilaiMahasiswa}, '${keteranganMhs}')`;
       pool.query(sql, (err, data) => {
         res.json({
