@@ -1,18 +1,76 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import './add.css'
+import Mahasiswa from '../listMahasiswa/listMahasiswa'
+import Matkul from '../listMatkul/listMatkul'
 import * as redux from 'redux';
 import { connect } from 'react-redux';
 import * as AppActions from '../../action';
 
 class Add extends Component {
+    constructor(props, context) {
+        super(props, context)
+        this.state = {
+            id_mhs: '',
+            id_matkul: '',
+            nilai: undefined,
+            keterangan: ''
+        }
+    }
 
-    handleSubmit(e){
+    // componentDidMount() {
+    //     this.props.actions.loadMahasiswa();
+    //     this.props.actions.loadMatakuliah();
+    // }
+
+    handleMhsChange(e) {
+        this.setState({ id_mhs: e.target.value })
+        // console.log('Ini data filter mahasiswa ', e.target.value)
+    }
+
+    handleMatkulChange(e) {
+        this.setState({ id_matkul: e.target.value })
+    }
+
+    handleNilaiChange(e) {
+        this.setState({ nilai: e.target.value })
+    }
+
+    handleKeteranganChange(e) {
+        this.setState({ keterangan: e.target.value })
+    }
+
+    handleSubmit(e) {
         e.preventDefault()
         document.location = '/home'
+        let newData = {
+            id_mhs: this.state.id_mhs,
+            id_matkul: this.state.id_matkul,
+            nilai: this.state.nilai,
+            keterangan: this.state.keterangan
+        }
+        this.props.actions.saveData(newData);
+        console.log('Ini data new ', newData)
     }
 
     render() {
+        // const { data, dataMatkul } = this.props
+        // let filterMahasiswa = data
+        // let filterMatkul = dataMatkul
+
+        // // console.log('Ini data filter mahasiswa ', filterMahasiswa)
+        // // console.log('Ini data filter matkul ', filterMatkul)
+        // let nodesMhs = filterMahasiswa.map((dataMhs, index) => {
+        //     return (
+        //         <option key={index} value={dataMhs.id_mhs}>{dataMhs.nama_mhs}</option>
+        //     )
+        // })
+
+        // let nodesMatkul = filterMatkul.map((data, index) => {
+        //     return (
+        //         <option key={index} value={data.id_matkul}>{data.nama_matkul}</option>
+        //     )
+        // })
         return (
             <Container style={{ textAlign: 'center' }}>
                 <Row style={{ marginTop: '50px' }}>
@@ -22,23 +80,28 @@ class Add extends Component {
                 </Row>
                 <Row style={{ marginTop: '50px' }}>
                     <Col md="12">
-                        <Form  onSubmit={this.handleSubmit.bind(this)}>
+                        <Form onSubmit={this.handleSubmit.bind(this)}>
                             <Form.Group>
-                                <Form.Control as="select" defaultValue="Choose...">
-                                    <option>-- Pilih Nama Mahasiswa --</option>
-                                    <option>...</option>
-                                </Form.Control>
+                                <Mahasiswa
+                                dataMhs={this.state.id_mhs} 
+                                changeMhs={this.handleMhsChange.bind(this)}
+                                />
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Control as="select" defaultValue="Choose...">
-                                    <option>-- Pilih Nama Mata Kuliah --</option>
-                                    <option>...</option>
-                                </Form.Control>
+                                <Matkul
+                                dataMatkul={this.state.id_matkul} 
+                                changeMatkul={this.handleMatkulChange.bind(this)}
+                                />
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Control placeholder="Nilai" />
+                                <Form.Control
+                                    placeholder="Nilai"
+                                    value={this.state.nilai}
+                                    onChange={this.handleNilaiChange.bind(this)}
+                                    required
+                                />
                             </Form.Group>
 
                             <Form.Group>
@@ -46,9 +109,9 @@ class Add extends Component {
                                     as="textarea"
                                     rows="3"
                                     placeholder="Keterangan"
-                                    // value={this.state.note}
-                                    // onChange={this.handleNoteChange.bind(this)}
-                                    // required
+                                    value={this.state.keterangan}
+                                    onChange={this.handleKeteranganChange.bind(this)}
+                                    required
                                 />
                             </Form.Group>
 
@@ -63,6 +126,13 @@ class Add extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        data: state.data,
+        dataMatkul: state.dataMatkul
+    }
+}
+
 function mapDispatchToProps(dispatch) {
     return {
         actions: redux.bindActionCreators(AppActions, dispatch)
@@ -70,6 +140,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(Add)
+
+// export default Add
