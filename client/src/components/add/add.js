@@ -18,14 +18,8 @@ class Add extends Component {
         }
     }
 
-    // componentDidMount() {
-    //     this.props.actions.loadMahasiswa();
-    //     this.props.actions.loadMatakuliah();
-    // }
-
     handleMhsChange(e) {
         this.setState({ id_mhs: e.target.value })
-        // console.log('Ini data filter mahasiswa ', e.target.value)
     }
 
     handleMatkulChange(e) {
@@ -50,27 +44,9 @@ class Add extends Component {
             keterangan: this.state.keterangan
         }
         this.props.actions.saveData(newData);
-        console.log('Ini data new ', newData)
     }
 
     render() {
-        // const { data, dataMatkul } = this.props
-        // let filterMahasiswa = data
-        // let filterMatkul = dataMatkul
-
-        // // console.log('Ini data filter mahasiswa ', filterMahasiswa)
-        // // console.log('Ini data filter matkul ', filterMatkul)
-        // let nodesMhs = filterMahasiswa.map((dataMhs, index) => {
-        //     return (
-        //         <option key={index} value={dataMhs.id_mhs}>{dataMhs.nama_mhs}</option>
-        //     )
-        // })
-
-        // let nodesMatkul = filterMatkul.map((data, index) => {
-        //     return (
-        //         <option key={index} value={data.id_matkul}>{data.nama_matkul}</option>
-        //     )
-        // })
         return (
             <Container style={{ textAlign: 'center' }}>
                 <Row style={{ marginTop: '50px' }}>
@@ -143,5 +119,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(Add)
-
-// export default Add

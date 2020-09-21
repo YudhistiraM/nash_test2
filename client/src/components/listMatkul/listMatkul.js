@@ -20,13 +20,10 @@ class Matkul extends Component {
                     <option key={index} value={data.id_matkul}>{data.nama_matkul}</option>
                 )
             })
-    
-            // console.log('ini data matkul', filterMatkul)
         return (
             <Form.Control
                 as="select"
                 defaultValue="Choose..."
-                // value={this.state.id_matkul}
                 onChange={this.props.changeMatkul}
                 required
             >

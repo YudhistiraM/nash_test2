@@ -20,13 +20,10 @@ class Mahasiswa extends Component {
                 <option key={index} value={data.id_mhs}>{data.nama_mhs}</option>
             )
         })
-
-        // console.log('ini data mahasiswa', filterMahasiswa)
         return (
             <Form.Control
                 as="select"
                 defaultValue="Choose..."
-                // value={this.props.state.dataMhs}
                 onChange={this.props.changeMhs}
             >
                 <option>-- Pilih Nama Mahasiswa --</option>
