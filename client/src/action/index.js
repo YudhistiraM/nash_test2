@@ -52,7 +52,6 @@ export function loadMahasiswa() {
     return dispatch => {
         axios.get(SERVER_URL + 'mahasiswa')
             .then(res => {
-                // console.log('Ini data mahasiswa action', res.data.data);
                 dispatch(loadMahasiswaSuccess(res.data.data))
             })
     }
@@ -62,7 +61,6 @@ export function loadMatakuliah() {
     return dispatch => {
         axios.get(SERVER_URL + 'mata_kuliah')
             .then(res => {
-                // console.log('Ini data matakuliah Action', res.data.data);
                 dispatch(loadMatakuliahSuccess(res.data.data))
             })
     }
