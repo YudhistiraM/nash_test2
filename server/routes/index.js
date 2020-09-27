@@ -7,7 +7,7 @@ module.exports = function (pool) {
   /* GET home page data mahasiswa. */
   router.get('/', function (req, res, next) {
     try {
-      let sql = `SELECT m.id_mhs, m.nama_mhs, mt.nama_matkul, nilai_mhs FROM mahasiswa as m, mata_kuliah as mt, nilai WHERE m.id_mhs = nilai.id_mhs AND mt.id_matkul = nilai.id_matkul;`;
+      let sql = `SELECT m.id_mhs, m.nama_mhs, mt.id_matkul, mt.nama_matkul, id_nilai, nilai_mhs, keterangan FROM mahasiswa as m, mata_kuliah as mt, nilai WHERE m.id_mhs = nilai.id_mhs AND mt.id_matkul = nilai.id_matkul`;
       pool.query(sql, (err, data) => {
         res.json({
           success: true,
