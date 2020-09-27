@@ -59,15 +59,15 @@ class Add extends Component {
                         <Form onSubmit={this.handleSubmit.bind(this)}>
                             <Form.Group>
                                 <Mahasiswa
-                                dataMhs={this.state.id_mhs} 
                                 changeMhs={this.handleMhsChange.bind(this)}
+                                selected={'default'}
                                 />
                             </Form.Group>
 
                             <Form.Group>
                                 <Matkul
-                                dataMatkul={this.state.id_matkul} 
                                 changeMatkul={this.handleMatkulChange.bind(this)}
+                                selected={'default'}
                                 />
                             </Form.Group>
 

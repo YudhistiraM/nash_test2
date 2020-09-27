@@ -12,22 +12,22 @@ class Matkul extends Component {
     }
 
     render() {
-        const { data } = this.props
+        const { data, selected } = this.props
         let filterMatkul = data
 
         let nodesMatkul = filterMatkul.map((data, index) => {
                 return (
-                    <option key={index} value={data.id_matkul}>{data.nama_matkul}</option>
+                    <option key={index} value={data.id_matkul} selected={data.id_matkul === selected}>{data.nama_matkul}</option>
                 )
             })
         return (
             <Form.Control
                 as="select"
-                defaultValue="Choose..."
+                defaultValue={selected}
                 onChange={this.props.changeMatkul}
                 required
             >
-                <option>-- Pilih Nama Mata Kuliah --</option>
+                <option value={'default'}>-- Pilih Nama Mata Kuliah --</option>
                 {nodesMatkul}
             </Form.Control>
         )

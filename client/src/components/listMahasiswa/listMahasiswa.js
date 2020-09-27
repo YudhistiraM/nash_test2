@@ -12,21 +12,21 @@ class Mahasiswa extends Component {
     }
 
     render() {
-        const { data } = this.props
-        let filterMahasiswa = data
+        const { dataMhs, selected } = this.props
+        let filterMahasiswa = dataMhs
 
         let nodesMhs = filterMahasiswa.map((data, index) => {
             return (
-                <option key={index} value={data.id_mhs}>{data.nama_mhs}</option>
+                <option key={index} value={data.id_mhs} selected={data.id_mhs === selected}>{data.nama_mhs}</option>
             )
         })
         return (
             <Form.Control
                 as="select"
-                defaultValue="Choose..."
+                defaultValue={selected}
                 onChange={this.props.changeMhs}
             >
-                <option>-- Pilih Nama Mahasiswa --</option>
+                <option value={'default'}>-- Pilih Nama Mahasiswa --</option>
                 {nodesMhs}
             </Form.Control>
         )
@@ -35,7 +35,7 @@ class Mahasiswa extends Component {
 
 function mapStateToProps(state) {
     return {
-        data: state.data
+        dataMhs: state.dataMhs
     }
 }
 
