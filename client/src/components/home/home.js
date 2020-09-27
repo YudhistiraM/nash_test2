@@ -4,24 +4,33 @@ import './home.css'
 import * as redux from 'redux'
 import { connect } from 'react-redux'
 import * as AppActions from '../../action'
+import { Link } from 'react-router-dom'
+
+
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
 
-    componentDidMount() {
-        this.props.actions.loadData();
+        this.state = {
+            data: null,
+        };
     }
 
     handleAddClick(e) {
         document.location = '/add'
     }
 
-    handleEditClick(e) {
-        document.location = '/edit'
+    handleDeleteClick(id_nilai) {
+        if (window.confirm("Data Akan Di Hapus")) {
+            this.props.actions.deleteNilai(id_nilai)
+            document.location = '/home'
+        }
     }
 
     render() {
-        const { data } = this.props
-        let filterData = data
+        const { dataNilai } = this.props
+        let filterData = dataNilai
         let dataNodes = filterData.map((data, index) => {
             return (
                 <tr key={index}>
@@ -31,12 +40,17 @@ class Home extends Component {
                     <td style={{ verticalAlign: 'middle' }}>{data.nama_matkul}</td>
                     <td style={{ verticalAlign: 'middle' }}>{data.nilai_mhs}</td>
                     <td>
+
+                        <Link to={'edit/' + data.id_nilai}>
+                            <Button
+                                style={{ marginBottom: '15px' }}
+                                variant="success"
+                                block>Edit</Button>
+                        </Link>
                         <Button
-                            style={{ marginRight: '15px' }}
-                            variant="success"
-                            onClick={this.handleEditClick.bind(this)}
-                            block>Edit</Button>
-                        <Button variant="danger" block>Delete</Button>
+                            variant="danger"
+                            onClick={() => this.handleDeleteClick(data.id_nilai)}
+                            block>Delete</Button>
                     </td>
                 </tr>
             )
@@ -79,7 +93,7 @@ class Home extends Component {
 
 function mapStateToProps(state) {
     return {
-        data: state.data
+        dataNilai: state.dataNilai
     }
 }
 

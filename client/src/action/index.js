@@ -12,7 +12,7 @@ function loadDataSuccess(data) {
 
 function loadMahasiswaSuccess(data) {
     return {
-        type: types.LOAD_MAHASISWA_SUCCESS, 
+        type: types.LOAD_MAHASISWA_SUCCESS,
         data: data
     }
 }
@@ -66,3 +66,29 @@ export function loadMatakuliah() {
     }
 }
 
+
+export function editNilai(id_nilai, formData) {
+    return dispatch => {
+        axios.put(`${SERVER_URL} + ${id_nilai}`, formData)
+            .then((err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(res.data);
+                }
+            })
+    }
+}
+
+export function deleteNilai(id_nilai) {
+    return dispatch => {
+        axios.delete(`${SERVER_URL} + ${id_nilai}`)
+            .then((err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(res.data);
+                }
+            })
+    }
+}
