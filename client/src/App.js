@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import { Landing, Home, Add, Edit } from './components';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import * as redux from 'redux'
+import { connect } from 'react-redux'
+import * as AppActions from './action'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  componentDidMount() {
+    this.props.actions.loadData();
 }
 
-export default App;
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Landing />
+          </Route>
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/add">
+            <Add />
+          </Route>
+          <Route exact path="/edit/:id">
+            <Edit dataNilai={this.props.dataNilai} />
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+      dataNilai: state.dataNilai
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+      actions: redux.bindActionCreators(AppActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
